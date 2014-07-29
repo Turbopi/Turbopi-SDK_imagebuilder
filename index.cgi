@@ -173,6 +173,7 @@ EOF`
 models_str=`echo "$models_str\n$model_tmp"`
 done
 
+files_str=""
 for file in `ls -l $Home_dir/files |grep ^d | awk {'print $NF'} | grep "^files"`
 do
 files_str_tmp=`cat <<EOF
