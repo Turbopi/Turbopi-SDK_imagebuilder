@@ -22,6 +22,10 @@ else
 echo "Wrong Port!!" && exit 2
 fi
 }
+[ -d $PWD/builder ] || mkdir $PWD/builder
+[ -d $PWD/files ] || mkdir $PWD/files
+[ -d $PWD/tmp ] || mkdir $PWD/tmp
+
 if
 [ ! -f $PWD/etc/web_server.conf ]
 then
