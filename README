@@ -8,16 +8,16 @@ And your Custom files must keep in files/
 So does like:
 
 builder
-©À©¤©¤ OpenWrt-ImageBuilder-ramips_mt7620n-for-linux-i686
-©¸©¤©¤ OpenWrt-ImageBuilder-x86_generic-for-linux-i686
+â”œâ”€â”€ OpenWrt-ImageBuilder-ramips_mt7620n-for-linux-i686
+â””â”€â”€ OpenWrt-ImageBuilder-x86_generic-for-linux-i686
 
 and
 
 files
-©À©¤©¤ files_ar71xx
-©À©¤©¤ files_ar71xx_bb
-©À©¤©¤ files_n14u_bb
-©À©¤©¤ files_rg100a
-©¸©¤©¤ files_x86
+â”œâ”€â”€ files_ar71xx
+â”œâ”€â”€ files_ar71xx_bb
+â”œâ”€â”€ files_n14u_bb
+â”œâ”€â”€ files_rg100a
+â””â”€â”€ files_x86
 
 And it will Works Well.
