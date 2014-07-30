@@ -1,14 +1,34 @@
 #!/bin/sh
 Home_dir=$PWD
 eval `$Home_dir/bin/proccgi.cgi $*`
+Lang_list=`ls $Home_dir/etc/lang | awk -F "." {'print $1'}`
 [ -n "$FORM_lang_set" ] && sed -i '/LANG=/d' $Home_dir/etc/lang.conf && echo "LANG=\"$FORM_lang_set\"" >> $Home_dir/etc/lang.conf
 eval `cat $Home_dir/etc/lang.conf`
 eval `cat $Home_dir/etc/lang/$LANG".i18n"`
-eval `echo $LANG | sed 's/-/_/g'`"_seted"=selected
-for i in `echo "$QUERY_STRING" | tr "&" "\n"`
-do
-eval "${i}"
-done
+Builders=`ls -l $Home_dir/builder |grep ^d | grep "ImageBuilder.*i686" | awk {'print $NF'}`
+Files=`ls -l $Home_dir/files |grep ^d | awk {'print $NF'} | grep "^files"`
+temp_session=`echo "$Builders\n$Files" | sed '/^$/d' | md5sum | awk {'print $1'}`
+[ "`cat $Home_dir/tmp/temp_session`" = "$temp_session" ] || rm $Home_dir/tmp/index.cgi.* && echo $temp_session > $Home_dir/tmp/temp_session
+if
+cat $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG | grep -q "DOCTYPE html"
+then
+cat $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG | sed "s/127.0.0.1/$SERVER_ADDR/g"
+exit 0
+else
+	ps -aux | grep -v grep | grep -q "curl.*index.cgi" || if
+		[ "$QUERY_STRING" == "temp" ]
+		then
+		echo "" > $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG
+		curl $REQUEST_SCHEME://127.0.0.1:$SERVER_PORT$SCRIPT_NAME?temp >> $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG
+		cat $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG | sed "s/127.0.0.1/$SERVER_ADDR/g"
+		exit 0
+		else
+		echo "" > $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG
+		curl $REQUEST_SCHEME://127.0.0.1:$SERVER_PORT$SCRIPT_NAME?temp >> $Home_dir/tmp/$(basename $SCRIPT_NAME).$LANG
+		fi
+fi
+
+
 cat <<EOF
 
 <!DOCTYPE html>
@@ -86,7 +106,8 @@ if
 [ "$FORM_userchange" = "userchange" ] && [ -n "$FORM_user" ] && [ -n "$FORM_passwd" ]
 then
 if
-echo "$FORM_passwd" | $Home_dir/bin/htpasswd -c $Home_dir/.htpasswd $FORM_user | grep -q "Adding password"
+$Home_dir/httpd/bin/htpasswd -c -b -d .htpasswd $FORM_user $FORM_user >/dev/null 2>&1
+#echo "$FORM_passwd" | $Home_dir/bin/htpasswd -c $Home_dir/.htpasswd $FORM_user | grep -q "Adding password"
 then
 cat <<EOF
 <div class="col-md-12">
@@ -125,6 +146,12 @@ cat <<EOF
 EOF
 exit 1
 fi
+for i in `echo "$Lang_list"`
+do
+i_seted=""
+[ "${i}" = "$LANG" ] && i_seted="selected"
+Lang_str=`echo "$Lang_str""<option value="${i}" $i_seted>${i}</option>"`
+done
 cat <<EOF
 <div class="form-group">
 	<a href="/"><h1><p class="bg-primary col-sm-2"> $LANG_Index </p></h1></a>
@@ -132,23 +159,28 @@ cat <<EOF
 	<form class="form-horizontal" role="form" method="post">
 	<div class="col-sm-2">
 		<select class="form-control" name="lang_set" onChange="javascript:this.form.submit()">
-		<option value="en" $en_seted>en</option>
-		<option value="zh-cn" $zh_cn_seted>zh-cn</option>
+		$Lang_str
 		</select>
 	</div>
-</form>
+	</form>
+</div>
+<div class="form-group col-sm-12">
+<div class="form-group col-sm-10">
+<font size=2 color=#516D87><h1><p class="bg-danger"><span class="glyphicon glyphicon-envelope"></span></span></span> $Lang_Logout_tip </p></h1></font>
+</div>
+	<div class="form-group col-sm-2">
+	<form class="form-horizontal" role="form" method="post">
+	<a href="http://logout:logout@$HTTP_HOST:$SERVER_PORT/logout/" class="btn btn-large btn-info"><span class="glyphicon glyphicon-log-out"></span> $Lang_Logout </a>
+	</form>
+	</div>
 </div>
 EOF
-
 grep [^.*$] $Home_dir/.htpasswd >/dev/null 2>&1 || cat <<EOF
 <div class="col-md-12">
 <font size=2 color=#516D87><h2><p class="bg-danger"><span class="glyphicon glyphicon-user"></span> $Lang_Username $Lang_Password $Lang_not_seted</p></h2></font>
 </div>
 EOF
-
-Builders=`ls -l $Home_dir/builder |grep ^d | grep "ImageBuilder.*i686" | awk {'print $NF'}`
 colors="bg-primary bg-success bg-info bg-warning bg-danger"
-
 for i in `echo "$Builders"`
 do
 [ -n "$color_num" ] || color_num=1
@@ -159,7 +191,6 @@ li_str_tmp=`cat <<EOF
 <li><a href="#div_${i}" data-toggle="tab" class="$color">${i}</a></li>
 EOF`
 li_str=`echo "$li_str\n$li_str_tmp"`
-
 cd $Home_dir/builder/${i}
 models_str=""
 make_info=`make info`
@@ -172,9 +203,8 @@ model_tmp=`cat <<EOF
 EOF`
 models_str=`echo "$models_str\n$model_tmp"`
 done
-
 files_str=""
-for file in `ls -l $Home_dir/files |grep ^d | awk {'print $NF'} | grep "^files"`
+for file in `echo "$Files"`
 do
 files_str_tmp=`cat <<EOF
 <label class="radio-inline">
@@ -183,9 +213,7 @@ files_str_tmp=`cat <<EOF
 EOF`
 files_str=`echo "$files_str\n${files_str_tmp}"`
 done
-
 content_str_temp=`cat <<EOF
-
 <div class="tab-pane " id="div_${i}">
 <form action="exec_build.cgi" method="post">
 <div class="col-sm-6">

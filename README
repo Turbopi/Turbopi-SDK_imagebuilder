@@ -1,6 +1,6 @@
 Run command:
 
-sudo ./init.sh
+./init.sh
 
 Your ImageBuilder dictionary must keep in builder/ folder.
 And your Custom files must keep in files/
@@ -20,4 +20,6 @@ files
 ├── files_rg100a
 └── files_x86
 
+Browser open: http://[Server]:[Port]
+Use Default User:admin Pass:admin
 And it will Works Well.

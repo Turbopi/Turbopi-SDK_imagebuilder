@@ -19,7 +19,7 @@ cat <<EOF
 	<link rel="stylesheet" href="/common/css/bootstrap.min.css">
 	<script src="/common/js/jquery.min.js"></script>
 	<script src="/common/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/common/js/jquery.zclip.min.js"></script>
+	<script type="text/javascript" src="/common/js/jquery.zclip.js"></script>
 <style>
 	body {
 padding-top: 30px;
@@ -112,7 +112,10 @@ EOF`
 [ -z "$FORM_file" ] && Error_str4=`cat <<EOF
 <font size=2 color=#516D87><h2><p class="bg-danger"><span class="glyphicon glyphicon-remove"></span> $Lang_file_not_seted </p></h2></font>
 EOF`
-Error_str=`echo "$Error_str1" "$Error_str2" "$Error_str3" "$Error_str4"`
+ps -aux | grep -v grep | grep -q "call_image.*$FORM_builder" && Error_str5=`cat <<EOF
+<font size=2 color=#516D87><h2><p class="bg-danger"><span class="glyphicon glyphicon-remove"></span> $FORM_builder $Lang_Builder_in_work </p></h2></font>
+EOF`
+Error_str=`echo "$Error_str1" "$Error_str2" "$Error_str3" "$Error_str4" "$Error_str5"`
 if
 echo "$Error_str" | grep -q "bg-danger"
 then
