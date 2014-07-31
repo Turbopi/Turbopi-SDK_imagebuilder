@@ -170,7 +170,7 @@ cat <<EOF
 </div>
 	<div class="form-group col-sm-2">
 	<form class="form-horizontal" role="form" method="post">
-	<a href="http://logout:logout@$HTTP_HOST:$SERVER_PORT/logout/" class="btn btn-large btn-info"><span class="glyphicon glyphicon-log-out"></span> $Lang_Logout </a>
+	<a href="http://logout:logout@$HTTP_HOST/logout/" class="btn btn-large btn-info"><span class="glyphicon glyphicon-log-out"></span> $Lang_Logout </a>
 	</form>
 	</div>
 </div>
