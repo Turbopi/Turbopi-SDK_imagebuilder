@@ -23,3 +23,21 @@ files
 Browser open: http://[Server]:[Port]
 Use Default User:admin Pass:admin
 And it will Works Well.
+
+############
+# Default User: admin
+# Default Pass: admin
+############
+
+############
+# You can change Password by:
+# cd [PATH]
+# local/httpd/bin/htpasswd -c .htpasswd [username]
+############
+
+############
+# To start service run:
+# cd [PATH]
+# sudo local/httpd/bin/apachectl restart
+############
+
