@@ -1,7 +1,7 @@
 #!/bin/sh
 HOME_DIR=`pwd`
 if
-[ "`whoami`" == "root" ]
+[ `whoami` = root ]
 then
 echo "Canot Run by root!!" && exit 2
 fi
