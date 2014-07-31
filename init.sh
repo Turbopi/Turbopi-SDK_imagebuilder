@@ -1,5 +1,8 @@
 #!/bin/sh
 HOME_DIR=`pwd`
+[ -d $HOME_DIR/tmp ] || mkdir $HOME_DIR/tmp
+[ -d $HOME_DIR/logs ] || mkdir $HOME_DIR/logs
+[ -d $HOME_DIR/logout ] || mkdir $HOME_DIR/logout
 if
 [ `whoami` = root ]
 then
@@ -47,8 +50,6 @@ cd $HOME_DIR/sources/httpd-2.4.10
 ./configure --prefix=$HOME_DIR/local/httpd --with-apr="$HOME_DIR/local/apr/bin/apr-1-config" --with-apr-util="$HOME_DIR/local/apr-util/bin/apu-1-config" --with-pcre="$HOME_DIR/local/pcre/bin/pcre-config" --enable-http --enable-ssl --enable-proxy --disable-disk-cache --enable-maintainer-mode --enable-mime-magic --without-suexec-bin --sysconfdir=$HOME_DIR/etc ap_void_ptr_lt_long=no logfiledir="$HOME_DIR/logs" && make && make install
 
 }
-
-
 ask()
 {
 echo -n "Bind to(127.0.0.1/0.0.0.0:)"
@@ -60,7 +61,6 @@ echo "Use IP:$IP"
 else
 echo "Wrong IP!!" && exit 2
 fi
-
 echo -n "Bind port(80/8080/etc:)"
 read PORT
 if
@@ -71,8 +71,6 @@ else
 echo "Wrong Port!!" && exit 2
 fi
 }
-
-
 if
 [ ! -f $HOME_DIR/etc/httpd.conf ] || [ `grep "#" $HOME_DIR/etc/httpd.conf | wc -l` -gt 10 ]
 then
@@ -155,12 +153,8 @@ SSLRandomSeed connect builtin
 
 EOF
 [ -f $HOME_DIR/.htpasswd ] || $HOME_DIR/local/httpd/bin/htpasswd -c -b -d $HOME_DIR/.htpasswd admin admin
-[ -d $HOME_DIR/logout ] || mkdir $HOME_DIR/logout
 [ -f $HOME_DIR/logout/.htpasswd ] || $HOME_DIR/local/httpd/bin/htpasswd -c -b -d $HOME_DIR/logout/.htpasswd logout logout
-[ -d $HOME_DIR/tmp ] || mkdir $HOME_DIR/tmp
-[ -d $HOME_DIR/logs ] || mkdir $HOME_DIR/logs
 fi
-
 cat <<EOF
 Starting Web Server on `cat $HOME_DIR/etc/httpd.conf | grep "^Listen " | awk {'print $2'}`..
 ############
