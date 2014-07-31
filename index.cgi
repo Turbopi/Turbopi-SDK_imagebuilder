@@ -106,7 +106,7 @@ if
 [ "$FORM_userchange" = "userchange" ] && [ -n "$FORM_user" ] && [ -n "$FORM_passwd" ]
 then
 if
-$Home_dir/httpd/bin/htpasswd -c -b -d .htpasswd $FORM_user $FORM_user >/dev/null 2>&1
+$Home_dir/local/httpd/bin/htpasswd -c -b -d .htpasswd $FORM_user $FORM_user >/dev/null 2>&1
 #echo "$FORM_passwd" | $Home_dir/bin/htpasswd -c $Home_dir/.htpasswd $FORM_user | grep -q "Adding password"
 then
 cat <<EOF
