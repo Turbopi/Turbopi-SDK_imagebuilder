@@ -4,6 +4,7 @@ HOME_DIR=`pwd`
 [ -d $HOME_DIR/logs ] || mkdir $HOME_DIR/logs
 [ -d $HOME_DIR/logout ] || mkdir $HOME_DIR/logout
 [ -d $HOME_DIR/builder ] || mkdir $HOME_DIR/builder
+[ -d $HOME_DIR/files ] || mkdir $HOME_DIR/files
 if
 [ `whoami` = root ]
 then
