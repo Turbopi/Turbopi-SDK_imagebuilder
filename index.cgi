@@ -166,7 +166,7 @@ cat <<EOF
 </div>
 <div class="form-group col-sm-12">
 <div class="form-group col-sm-10">
-<font size=2 color=#516D87><h1><p class="bg-danger"><span class="glyphicon glyphicon-envelope"></span></span></span> $Lang_Logout_tip </p></h1></font>
+<font size=2 color=#516D87><h4><p class="bg-danger"><span class="glyphicon glyphicon-envelope"></span></span></span> $Lang_Logout_tip </p></h4></font>
 </div>
 	<div class="form-group col-sm-2">
 	<form class="form-horizontal" role="form" method="post">
