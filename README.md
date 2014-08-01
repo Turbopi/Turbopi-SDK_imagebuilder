@@ -5,7 +5,7 @@ Turbopi-SDK_imagebuilder
 ![Turbopi-SDK_imagebuilder screencapture](https://github.com/Turbopi/Turbopi-SDK_imagebuilder/raw/master/common/screencapture-Turbopi-imagebuilder.png)
 
 ### Run command:
-        ./init.sh
+	./init.sh
 
 
 Your ImageBuilder dictionary must keep in builder/ folder.
