@@ -1,6 +1,5 @@
 
-![github](https://raw.githubusercontent.com/Turbopi/Turbopi-SDK_imagebuilder/master/common/screencapture-Turbopi-imagebuilder.png "Turbopi-SDK_imagebuilder") 
-
+![SDK_imagebuilder](https://raw.githubusercontent.com/Turbopi/Turbopi-SDK_imagebuilder/master/common/screencapture-Turbopi-imagebuilder.png "SDK_imagebuilder")
 
 ### Run command:
 		./init.sh
@@ -47,4 +46,4 @@ And it will Works Well.
 
 
 
-[www.turbopi.com](http://www.turbopi.com) © 2014. All Rights Reserved.
+[www.turbopi.com](http://www.turbopi.com "www.turbopi.com") © 2014. All Rights Reserved.
