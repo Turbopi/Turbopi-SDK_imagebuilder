@@ -1,5 +1,8 @@
+Turbopi-SDK_imagebuilder
+=========
+## Make OpenWrt image packaging more easy
 
-[![Turbopi-SDK_imagebuilder dualmode](https://github.com/altercation/solarized/raw/master/img/solarized-yinyang.png)](#features)
+![Turbopi-SDK_imagebuilder screencapture](https://github.com/Turbopi/Turbopi-SDK_imagebuilder/raw/master/common/screencapture-Turbopi-imagebuilder.png)
 
 ### Run command:
         ./init.sh
@@ -9,10 +12,9 @@ Your ImageBuilder dictionary must keep in builder/ folder.
 And your Custom files must keep in files/
 
 So does like:
-###
-        builder
-        ├── OpenWrt-ImageBuilder-ramips_mt7620n-for-linux-i686
-        └── OpenWrt-ImageBuilder-x86_generic-for-linux-i686
+		builder
+		├── OpenWrt-ImageBuilder-ramips_mt7620n-for-linux-i686
+		└── OpenWrt-ImageBuilder-x86_generic-for-linux-i686
 
 and
 ###
