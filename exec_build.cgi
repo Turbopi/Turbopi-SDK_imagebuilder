@@ -1,6 +1,7 @@
 #!/bin/sh
 Home_dir=$PWD
 eval `$Home_dir/bin/proccgi.cgi $*`
+Lang_list=`ls $Home_dir/etc/lang | awk -F "." {'print $1'}`
 [ -n "$FORM_lang_set" ] && sed '/^LANG=/d' && echo "LANG=\"$FORM_lang_set\"" >> $Home_dir/etc/lang.conf
 eval `cat $Home_dir/etc/lang.conf`
 eval `cat $Home_dir/etc/lang/$LANG".i18n"`
@@ -83,20 +84,23 @@ border-top: 1px solid #e5e5e5;
     <div class="row">
 EOF
 
+for i in `echo "$Lang_list"`
+do
+i_seted=""
+[ "${i}" = "$LANG" ] && i_seted="selected"
+Lang_str=`echo "$Lang_str""<option value="${i}" $i_seted>${i}</option>"`
+done
 cat <<EOF
-<div class="col-md-12">
 <div class="form-group">
-<a href="/"><h1><p class="bg-primary col-sm-2">$LANG_Index</p></h1></a>
+	<a href="/"><h1><p class="bg-primary col-sm-2"> $LANG_Index </p></h1></a>
 	<a href="http://www.turbopi.com" target="_blank"><h1><p class="bg-primary col-sm-8">$Lang_Turbopi_SDK_imagebuilder</p></h1></a>
-<form class="form-horizontal" role="form" method="post">
+	<form class="form-horizontal" role="form" method="post">
 	<div class="col-sm-2">
 		<select class="form-control" name="lang_set" onChange="javascript:this.form.submit()">
-		<option value="en" $en_seted>en</option>
-		<option value="zh-cn" $zh_cn_seted>zh-cn</option>
+		$Lang_str
 		</select>
 	</div>
-</form>
-</div>
+	</form>
 </div>
 EOF
 
