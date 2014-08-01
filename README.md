@@ -4,6 +4,13 @@ Turbopi-SDK_imagebuilder
 
 ![Turbopi-SDK_imagebuilder screencapture](https://github.com/Turbopi/Turbopi-SDK_imagebuilder/raw/master/common/screencapture-Turbopi-imagebuilder.png)
 
+### Support Multi-Languages,Now:
+	en
+	zh-cn
+	zh-tw
+	jp
+look forward to your contribution
+
 ### Run command:
 	./init.sh
 
