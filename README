@@ -11,12 +11,14 @@ Turbopi-SDK_imagebuilder
 Your ImageBuilder dictionary must keep in builder/ folder.
 And your Custom files must keep in files/
 
-## So does like:
+### So does like:
+
 	builder
 	├── OpenWrt-ImageBuilder-ramips_mt7620n-for-linux-i686
 	└── OpenWrt-ImageBuilder-x86_generic-for-linux-i686
 
-## and
+### and
+
 	files
 	├── files_ar71xx
 	├── files_ar71xx_bb
@@ -27,6 +29,7 @@ And your Custom files must keep in files/
 Browser open: http://[Server]:[Port]
 Use Default User:admin Pass:admin
 And it will Works Well.
+
 	############
 	# Default User: admin
 	# Default Pass: admin
