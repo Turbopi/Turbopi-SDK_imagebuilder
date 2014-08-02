@@ -136,10 +136,10 @@ fi
 
 builder=$FORM_builder
 model=$FORM_model
-packages=$FORM_packages
+packages="$FORM_packages"
 file=$FORM_file
 
-Work_str="make image PROFILE=$model PACKAGES="$packages" FILES=$Home_dir/files/$file/"
+Work_str="make image PROFILE=$model PACKAGES=\"$packages\" FILES=$Home_dir/files/$file/"
 cat <<EOF
 <div class="col-md-12">
 <div class="form-group">
@@ -178,7 +178,10 @@ cat <<EOF
 EOF
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 cd $Home_dir/builder/$builder
-make image PROFILE=$model PACKAGES="$packages" FILES=$Home_dir/files/$file/ 2>&1
+make clean 2>&1
+echo $packages
+make image PROFILE=$model FILES=$Home_dir/files/$file/ PACKAGES="$packages" 2>&1
+
 
 if [ $? = 0 ]
 then
