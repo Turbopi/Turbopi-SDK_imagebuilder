@@ -5,7 +5,7 @@ Lang_list=`ls $Home_dir/etc/lang | awk -F "." {'print $1'}`
 [ -n "$FORM_lang_set" ] && sed -i '/LANG=/d' $Home_dir/etc/lang.conf && echo "LANG=\"$FORM_lang_set\"" >> $Home_dir/etc/lang.conf
 eval `cat $Home_dir/etc/lang.conf`
 eval `cat $Home_dir/etc/lang/$LANG".i18n"`
-Builders=`ls -l $Home_dir/builder |grep ^d | grep "ImageBuilder.*i686" | awk {'print $NF'}`
+Builders=`ls -l $Home_dir/builder |grep ^d | grep -E "ImageBuilder.*i[4|6]86" | awk {'print $NF'}`
 Files=`ls -l $Home_dir/files |grep ^d | awk {'print $NF'} | grep "^files"`
 temp_session=`echo "$Builders\n$Files" | sed '/^$/d' | md5sum | awk {'print $1'}`
 [ "`cat $Home_dir/tmp/temp_session`" = "$temp_session" ] || rm $Home_dir/tmp/index.cgi.* && echo $temp_session > $Home_dir/tmp/temp_session
